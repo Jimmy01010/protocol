@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.1
-// source: proto/consignment/consignment.proto
+// source: consignment.proto
 
-package consignment
+package consignment_service
 
 import (
 	context "context"
@@ -135,5 +135,5 @@ var ShippingService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/consignment/consignment.proto",
+	Metadata: "consignment.proto",
 }
