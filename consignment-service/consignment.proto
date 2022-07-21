@@ -2,8 +2,7 @@
 syntax = "proto3";
 
 //default go package name
-option  go_package ="github.com/Jimmy01010/protocol/shippy/consignment-service";
-
+option  go_package ="github.com/Jimmy01010/protocol/consignment-service";
 
 package go.micro.srv.consignment;
 

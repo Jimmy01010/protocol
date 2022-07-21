@@ -1,4 +1,4 @@
-module github.com/Jimmy01010/protocol/shippy/consignment-service
+module github.com/Jimmy01010/protocol/consignment-service
 
 go 1.18
 
