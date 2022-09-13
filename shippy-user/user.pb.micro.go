@@ -5,21 +5,27 @@ package shippy_user
 
 import (
 	fmt "fmt"
-	proto "google.golang.org/protobuf/proto"
+	proto "github.com/golang/protobuf/proto"
 	math "math"
 )
 
 import (
 	context "context"
-	api "go-micro.dev/v4/api"
-	client "go-micro.dev/v4/client"
-	server "go-micro.dev/v4/server"
+	api "github.com/micro/go-micro/v2/api"
+	client "github.com/micro/go-micro/v2/client"
+	server "github.com/micro/go-micro/v2/server"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -40,6 +46,7 @@ type UserService interface {
 	Get(ctx context.Context, in *User, opts ...client.CallOption) (*Response, error)
 	GetAll(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	Auth(ctx context.Context, in *User, opts ...client.CallOption) (*Token, error)
+	ValidateToken(ctx context.Context, in *Token, opts ...client.CallOption) (*Token, error)
 }
 
 type userService struct {
@@ -94,6 +101,16 @@ func (c *userService) Auth(ctx context.Context, in *User, opts ...client.CallOpt
 	return out, nil
 }
 
+func (c *userService) ValidateToken(ctx context.Context, in *Token, opts ...client.CallOption) (*Token, error) {
+	req := c.c.NewRequest(c.name, "UserService.ValidateToken", in)
+	out := new(Token)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserService service
 
 type UserServiceHandler interface {
@@ -101,6 +118,7 @@ type UserServiceHandler interface {
 	Get(context.Context, *User, *Response) error
 	GetAll(context.Context, *Request, *Response) error
 	Auth(context.Context, *User, *Token) error
+	ValidateToken(context.Context, *Token, *Token) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -109,6 +127,7 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		Get(ctx context.Context, in *User, out *Response) error
 		GetAll(ctx context.Context, in *Request, out *Response) error
 		Auth(ctx context.Context, in *User, out *Token) error
+		ValidateToken(ctx context.Context, in *Token, out *Token) error
 	}
 	type UserService struct {
 		userService
@@ -135,4 +154,8 @@ func (h *userServiceHandler) GetAll(ctx context.Context, in *Request, out *Respo
 
 func (h *userServiceHandler) Auth(ctx context.Context, in *User, out *Token) error {
 	return h.UserServiceHandler.Auth(ctx, in, out)
+}
+
+func (h *userServiceHandler) ValidateToken(ctx context.Context, in *Token, out *Token) error {
+	return h.UserServiceHandler.ValidateToken(ctx, in, out)
 }
