@@ -1,14 +1,15 @@
 module github.com/Jimmy01010/protocol/shippy-user
 
-go 1.18
+go 1.17
 
 require (
+	github.com/golang/protobuf v1.5.2
 	go-micro.dev/v4 v4.7.0
-	google.golang.org/protobuf v1.28.0
+	google.golang.org/protobuf v1.26.0
 )
 
 require (
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/miekg/dns v1.1.43 // indirect
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
@@ -18,4 +19,5 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20210502180810-71e4cd670f79 // indirect
 	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
